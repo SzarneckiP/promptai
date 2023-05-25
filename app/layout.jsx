@@ -7,16 +7,22 @@ export const metadata = {
 }
 
 const RootLayout = ({ children }) => {
+
     return (
         <html lang='en'>
+            <head>
+                <link rel="shortcut icon" type='image/svg' href="assets/images/logo.svg" />
+            </head>
             <body>
-                <div className='main'>
-                    <div className='gradient' />
-                </div>
-                <main className='app'>
-                    <Nav />
-                    {children}
-                </main>
+                <Provider>
+                    <div className='main'>
+                        <div className='gradient' />
+                    </div>
+                    <main className='app'>
+                        <Nav />
+                        {children}
+                    </main>
+                </Provider>
             </body>
         </html>
     )

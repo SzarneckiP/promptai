@@ -72,13 +72,17 @@
 /* Tailwind Styles */
 /* eslint-disable */
 @layer components {
-
+        
     .app {
         @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
     }
 
     .black_btn {
         @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+    }
+
+    .copy_btn {
+        @apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199, 199, 199, 0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
     }
 
     .outline_btn {
@@ -109,10 +113,6 @@
         @apply block w-full rounded-md border border-gray-200 bg-white py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-black focus:outline-none focus:ring-0;
     }
 
-
-    .copy_btn {
-        @apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199, 199, 199, 0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
-    }
 
     .glassmorphism {
         @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199, 199, 199, 0.2)] backdrop-blur p-5;
@@ -146,7 +146,7 @@
     }
 
     .dropdown_link {
-        @apply text-sm font-inter text-gray-700 hover:text-gray-500 font-medium;
+        @apply my-2 text-sm font-inter text-gray-700 hover:text-gray-500 font-medium;
     }
 
     /* PromptCard Component */
