@@ -1,5 +1,5 @@
-import '@styles/global.css'
-import { Nav, Provider } from '@components'
+import '../styles/global.css'
+import { Nav, Provider } from '../components'
 
 export const metadata = {
     title: 'PromptAI | Generate prompts for Chat AI',
