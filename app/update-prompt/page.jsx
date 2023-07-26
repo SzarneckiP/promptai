@@ -1,12 +1,15 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { Form } from '../../components'
 import { dateCreator } from '../../utils/dateCreator'
 
-const CreatePrompt = () => {
+const EditPrompt = () => {
+    const searchParams = useSearchParams()
+    const promptId = searchParams.get('id')
+
     const { data: session } = useSession()
     const router = useRouter()
 
@@ -16,25 +19,42 @@ const CreatePrompt = () => {
         tag: '',
         createdOn: '',
         edited: '',
-        realized: false,
+        realized: '',
     })
 
-    const createPrompt = async (e) => {
+    useEffect(() => {
+        const getPromptDetails = async () => {
+            const response = await fetch(`/api/prompt/${promptId}`)
+            const data = await response.json()
+
+            setPost({
+                prompt: data.prompt,
+                tag: data.tag,
+                createdOn: data.createdOn,
+                edited: data.edited,
+                realized: data.realized,
+            })
+        }
+        if (promptId) getPromptDetails()
+    }, [promptId])
+
+    const editPrompt = async (e) => {
         e.preventDefault()
 
         setSubmitting(true)
 
+        if (!promptId) return alert('Prompt Id not found!')
+
         try {
-            const response = await fetch('/api/prompt/new', {
-                method: 'POST',
+            const response = await fetch(`/api/prompt/${promptId}`, {
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     prompt: post.prompt,
-                    userId: session?.user.id,
                     tag: post.tag,
-                    createdOn: dateCreator(),
+                    createdOn: post.createdOn,
                     edited: dateCreator(),
                     realized: post.realized,
                 })
@@ -56,11 +76,11 @@ const CreatePrompt = () => {
             {session?.user ? (
                 <div>
                     <Form
-                        type='Create'
+                        type='Edit'
                         post={post}
                         setPost={setPost}
                         submitting={submitting}
-                        handleSubmit={createPrompt}
+                        handleSubmit={editPrompt}
                     />
                 </div>
             ) : (
@@ -72,4 +92,4 @@ const CreatePrompt = () => {
     )
 }
 
-export default CreatePrompt
+export default EditPrompt

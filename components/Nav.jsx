@@ -3,12 +3,14 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import { motion } from 'framer-motion'
 
 const Nav = () => {
     const ref = useRef()
 
     const { data: session } = useSession()
 
+    const [loading, setLoading] = useState(false)
     const [providers, setProviders] = useState(null)
     const [toggleDropdown, setToggleDropdown] = useState(false)
 
@@ -28,7 +30,11 @@ const Nav = () => {
     }, [])
 
     return (
-        <nav className="flex-between w-full mb-16 pt-3">
+        <motion.nav
+            className="flex-between w-full mb-16 pt-3"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+        >
             <Link href='/' className="flex gap-2 flex-center">
                 <Image
                     src='assets/images/logo.svg'
@@ -42,7 +48,11 @@ const Nav = () => {
             {/* Desktop Navigation */}
             <div className="sm:flex hidden">
                 {session?.user ? (
-                    <div className="flex gap-3 md:gap-5">
+                    <motion.div
+                        className="flex gap-3 md:gap-5"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                    >
                         <Link
                             href={'/create-prompt'}
                             className="black_btn"
@@ -65,7 +75,7 @@ const Nav = () => {
                                 alt="user image"
                             />
                         </Link>
-                    </div>
+                    </motion.div>
                 ) : (
                     <>
                         {session?.user ? (
@@ -95,20 +105,20 @@ const Nav = () => {
                             </div>
                         ) : (
                             <>
-
                                 {providers ? (
-                                    Object.values(providers).map((provider) => (
+                                    Object.values(providers).map((provider) =>
+                                    (
                                         <button
                                             type="button"
                                             key={provider.name}
                                             onClick={() => signIn(provider.id)}
-                                            className="black_btn"
+                                            className="black_btn ml-2"
                                         >
                                             Sign In Width
                                             <Image
                                                 width={15}
                                                 height={15}
-                                                src={'/assets/icons/google.png'}
+                                                src={`/assets/icons/${provider.id}.png`}
                                                 alt="google"
                                                 style={{ marginLeft: '10px' }}
                                             />
@@ -232,7 +242,7 @@ const Nav = () => {
                     </>
                 )}
             </div>
-        </nav >
+        </motion.nav >
     )
 }
 
