@@ -119,7 +119,7 @@ const Nav = () => {
                                                 width={15}
                                                 height={15}
                                                 src={`/assets/icons/${provider.id}.png`}
-                                                alt="google"
+                                                alt={provider.id}
                                                 style={{ marginLeft: '10px' }}
                                             />
                                         </button>
@@ -209,15 +209,15 @@ const Nav = () => {
                                             type="button"
                                             key={provider.name}
                                             onClick={() => signIn(provider.id)}
-                                            className="black_btn"
+                                            className="outline_btn mr-2"
                                         >
-                                            Sign In Width
+                                            Sign In
                                             <Image
                                                 width={15}
                                                 height={15}
-                                                src={'/assets/icons/google.png'}
-                                                alt="google"
-                                                style={{ marginLeft: '7px' }}
+                                                src={`/assets/icons/${provider.id}.png`}
+                                                alt={provider.id}
+                                                style={{ marginLeft: '10px' }}
                                             />
                                         </button>
                                     ))
